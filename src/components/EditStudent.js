@@ -12,7 +12,7 @@ function EditStudent({ updateStudent, currentStudent, studentIndex }) {
         mentor: ""
     })
 
-    const [selectedCourse, setSelectedCourse] = useState(["Select your course", "Web Development", "Android Development", "Testing"])
+    const [selectedCourse, setSelectedCourse] = useState(["Web Development", "Android Development", "Testing"])
 
     const { id } = useParams()
 
@@ -20,7 +20,7 @@ function EditStudent({ updateStudent, currentStudent, studentIndex }) {
         axios
             .get(`http://localhost:3006/students/${id}`)
             .then(response => setStudent(response.data))
-    },[student])
+    },[])
 
     const handleDelete = (e, i) => {
         console.log(i)
@@ -35,22 +35,22 @@ function EditStudent({ updateStudent, currentStudent, studentIndex }) {
 
     const handleUpdate = (e) => {
         e.preventDefault();
-        if (student.mobileNumber.length === 10) {
-            updateStudent(student, studentIndex);
-            navigate('/')
-            console.log(student.mentor)
-        } else {
-            alert("Enter valid credentials")
-        }
+        updateStudent(student, studentIndex);
+        navigate('/')
+        console.log(student)
     }
 
     const handleChange = (e) => {
-        e.preventDefault()
-
+        // e.preventDefault()
+        // axios
+        //     .put(`http://localhost:3006/students/${id}`)
         setStudent({ ...student, [e.target.name]: e.target.value });
-        setSelectedCourse(selectedCourse)
+        // setSelectedCourse(selectedCourse)
+        console.log(e.target.value, e.target.name)
     }
-
+    useEffect(() => {
+        console.log(student)
+    }, [student])
     return (
         <div className='container'>
             <h3 className='edit-text'>Edit Student</h3>
@@ -61,7 +61,7 @@ function EditStudent({ updateStudent, currentStudent, studentIndex }) {
                 <br />
                 <label className='edit-label'>Email:</label>
                 <input className='edit-input' placeholder='Enter email' type='email' required name='email' onChange={handleChange} value={student.email} />
-               
+
                 <br />
                 <label className='edit-label'>Mobile Number:</label>
                 <input className='edit-input' placeholder='Enter mobile number' type='number' maxLength={10} required name='mobileNumber' onChange={handleChange} value={student.mobileNumber} />
@@ -80,9 +80,8 @@ function EditStudent({ updateStudent, currentStudent, studentIndex }) {
                         <tbody >
                             <tr >
                                 <td>
-                                    {   
+                                    {
                                         student.mentor && student.mentor.map((data, id) => {
-                                            console.log(student.mentor)                                                            
                                             if (student.mentor.length !== null) {
                                                 return <div key={id} className='edit-label'>
                                                     <label className='edit-mentor-label'>{data}:</label>
@@ -104,7 +103,7 @@ function EditStudent({ updateStudent, currentStudent, studentIndex }) {
                                         })
                                     }
 
-                                    
+
                                 </td>
 
                             </tr>

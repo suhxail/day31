@@ -15,15 +15,15 @@ function Topbar() {
     const [currentStudent, setCurrentStudent] = useState([])
     const [currentMentor, setCurrentMentor] = useState([])
     const [studentIndex, setStudentIndex] = useState()
-    const [mentorIndex, setMentorIndex] = useState()   
+    const [mentorIndex, setMentorIndex] = useState()
 
     useEffect(() => {
         axios
-            .get('http://localhost:3006/students')  
+            .get('http://localhost:3006/students')
             .then(response => setStudentList(response.data))
-    },[studentList])
+    }, [])
 
-    const {id} = useParams()
+    const { id } = useParams()
 
     const addStudent = (student) => {
         let newStudent = { ...student };
@@ -34,12 +34,12 @@ function Topbar() {
         axios
             .post('http://localhost:3006/students', newStudent)
 
-    } 
+    }
 
-    const editStudent = (student, studentIndex) => {        
+    const editStudent = (student, studentIndex) => {
         setCurrentStudent(student)
         setStudentIndex(studentIndex)
-        console.log(student) 
+        console.log(student)
     }
 
     const updateStudent = (updatedStudent, student) => {
@@ -67,12 +67,12 @@ function Topbar() {
         axios
             .get('http://localhost:3007/mentors')
             .then(response => setMentorList(response.data))
-    },[mentorList])
+    }, [])
 
     const addMentor = (mentor) => {
         let newMentor = { ...mentor }
         newMentor.id = mentorList.length + 1
-        newMentor.students = []       
+        newMentor.students = []
         setMentorList([...mentorList, newMentor])
 
         axios
@@ -112,10 +112,10 @@ function Topbar() {
     const assignStudent = (Student, mentor) => {
         console.log(Student, mentor)
         let data = {}
-        const updatedStudents = studentList.map((student) => {            
-            console.log(student.id,Student.id)
-            if (student.id == Student.id) {                
-                const a = { ...student, mentor: [ ...student.mentor, mentor.name] };
+        const updatedStudents = studentList.map((student) => {
+            console.log(student.id, Student.id)
+            if (student.id == Student.id) {
+                const a = { ...student, mentor: [...student.mentor, mentor.name] };
                 // const a = { ...mentor, students: [...mentor.students, student.name] } 
                 // const b = studentList.push(a)
                 data = a
@@ -132,12 +132,12 @@ function Topbar() {
 
     const assignMentor = async (Mentor, student) => {
         console.log(Mentor, mentorList)
-       
+
         let data = {}
         const updatedMentors = mentorList.map((mentor) => {
             console.log(Mentor.id, mentor.id)
-            if (mentor.id == Mentor.id) {                
-                const a = { ...mentor, students: [...mentor.students, student.name] }                
+            if (mentor.id == Mentor.id) {
+                const a = { ...mentor, students: [...mentor.students, student.name] }
                 data = a
                 return data
             }

@@ -20,21 +20,19 @@ function EditMentor({ updateMentor, currentMentor, mentorIndex }) {
     axios
       .get(`http://localhost:3007/mentors/${id}`)
       .then(response => setMentor(response.data))
-  },[mentor])
+  }, [])
 
 
   const handleUpdate = (e) => {
     e.preventDefault()
-    if (mentor.mobileNumber.length === 10) {
-      updateMentor(mentor, mentorIndex);
-      navigate('/')
-    } else {
-      alert("Enter valid credentials")
-    }
+    updateMentor(mentor, mentorIndex);
+    navigate('/')
   }
 
   const handleChange = (e) => {
     e.preventDefault()
+    axios
+      .put(`http://localhost:3007/mentors/${id}`)
     setMentor({ ...mentor, [e.target.name]: e.target.value });
     setSelectedCourse(selectedCourse)
   }
@@ -83,13 +81,13 @@ function EditMentor({ updateMentor, currentMentor, mentorIndex }) {
                   {
                     mentor.students && mentor.students.map((data, id) => {
                       // for (let i = 0; i <= mentor.students.length; i++) {
-                        if (mentor.students.length !== null) {
-                          return <div key={id} className='edit-label'>
-                            <label className='edit-mentor-label'>{data}:</label>
-                          </div>
-                        }
+                      if (mentor.students.length !== null) {
+                        return <div key={id} className='edit-label'>
+                          <label className='edit-mentor-label'>{data}:</label>
+                        </div>
                       }
-                    // }
+                    }
+                      // }
                     )
                   }
                 </td>
