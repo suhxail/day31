@@ -40,12 +40,8 @@ function EditStudent({ updateStudent, currentStudent, studentIndex }) {
         console.log(student)
     }
 
-    const handleChange = (e) => {
-        // e.preventDefault()
-        // axios
-        //     .put(`http://localhost:3006/students/${id}`)
-        setStudent({ ...student, [e.target.name]: e.target.value });
-        // setSelectedCourse(selectedCourse)
+    const handleChange = (e) => {        
+        setStudent({ ...student, [e.target.name]: e.target.value });        
         console.log(e.target.value, e.target.name)
     }
     useEffect(() => {

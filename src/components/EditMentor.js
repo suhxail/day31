@@ -28,13 +28,13 @@ function EditMentor({ updateMentor, currentMentor, mentorIndex }) {
     updateMentor(mentor, mentorIndex);
     navigate('/')
   }
+  useEffect(() => {
+    console.log()
+  }, [mentor])
 
-  const handleChange = (e) => {
-    e.preventDefault()
-    axios
-      .put(`http://localhost:3007/mentors/${id}`)
+  const handleChange = (e) => {        
     setMentor({ ...mentor, [e.target.name]: e.target.value });
-    setSelectedCourse(selectedCourse)
+    console.log(e.target.value, e.target.name)
   }
 
 
