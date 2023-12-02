@@ -28,14 +28,14 @@ function EditMentor({ updateMentor, currentMentor, mentorIndex }) {
     updateMentor(mentor, mentorIndex);
     navigate('/')
   }
-  
+
   const handleChange = (e) => {        
     setMentor({ ...mentor, [e.target.name]: e.target.value });
     console.log(e.target.value, e.target.name)
   }
 
   useEffect(() => {
-    console.log()
+    console.log(mentor)
   }, [mentor])
 
 
