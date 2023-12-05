@@ -53,14 +53,7 @@ function Dashboard({ currentStudent, studentList, mentorList, deleteStudent, del
                         return ""
                       }
                     })
-                  }
-                    {/* {
-                      mentor.students && mentor.students.map((data, id) => {
-                        if (mentor.students.length !== null) {
-                          return <p key={id}>{data}</p>
-                        }
-                      })
-                    } */}
+                  }                    
                 </td>
                 {student ?
                   <td>
