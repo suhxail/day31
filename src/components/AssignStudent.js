@@ -76,7 +76,7 @@ function AssignStudent({ assignStudent, studentList, mentorList, assignMentor })
         </div>
         <br />
         <div>
-          <button onClick={handleAssign}>Assign student</button>
+          <button className="btn btn-successi" onClick={handleAssign}>Assign student</button>
         </div>
       </div>
     </div>

@@ -6,9 +6,7 @@
       "email": "student1@gmail.com",
       "mobileNumber": "1111111111",
       "course": "Android Development",
-      "mentor": [
-        "Mentor1"
-      ]
+      "mentor": ["Mentor1"]
     },
     {
       "id": 2,

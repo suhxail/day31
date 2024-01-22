@@ -20,7 +20,7 @@ function EditStudent({ updateStudent, currentStudent, studentIndex }) {
         axios
             .get(`http://localhost:3006/students/${id}`)
             .then(response => setStudent(response.data))
-    },[])
+    }, [])
 
     const handleDelete = (e, i) => {
         console.log(i)
@@ -40,8 +40,8 @@ function EditStudent({ updateStudent, currentStudent, studentIndex }) {
         console.log(student)
     }
 
-    const handleChange = (e) => {        
-        setStudent({ ...student, [e.target.name]: e.target.value });        
+    const handleChange = (e) => {
+        setStudent({ ...student, [e.target.name]: e.target.value });
         console.log(e.target.value, e.target.name)
     }
     useEffect(() => {

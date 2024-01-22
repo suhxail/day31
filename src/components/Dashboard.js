@@ -42,8 +42,7 @@ function Dashboard({ currentStudent, studentList, mentorList, deleteStudent, del
                 <td><p>{student.name}</p></td>
                 <td><p>{student.email}</p></td>
                 <td><p>{student.mobileNumber}</p></td>
-                <td><p>{student.course}</p></td>
-                {/* <td><p>{student.mentor}</p></td> */}
+                <td><p>{student.course}</p></td>                
                 <td>
                   {
                     student.mentor && student.mentor.map((data,id) => {
@@ -53,7 +52,7 @@ function Dashboard({ currentStudent, studentList, mentorList, deleteStudent, del
                         return ""
                       }
                     })
-                  }                    
+                  }                     
                 </td>
                 {student ?
                   <td>
