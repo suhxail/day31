@@ -20,7 +20,7 @@ function Topbar() {
     useEffect(() => {
         axios
             // .get('http://localhost:3006/students')
-            .get('https://peppy-raindrop-d2a0c6.netlify.app/')
+            .get('https://peppy-raindrop-d2a0c6.netlify.app/students')
             .then(response => setStudentList(response.data))
     }, [])
 
@@ -67,7 +67,7 @@ function Topbar() {
     useEffect(() => {
         axios
             // .get('http://localhost:3007/mentors')
-            .get('https://peppy-raindrop-d2a0c6.netlify.app/')
+            .get('https://peppy-raindrop-d2a0c6.netlify.app/mentors')
             .then(response => setMentorList(response.data))
     }, [])
 
