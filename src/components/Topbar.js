@@ -18,8 +18,8 @@ function Topbar() {
     const [mentorIndex, setMentorIndex] = useState()
 
     useEffect(() => {
-        axios
-            .get('http://localhost:3006/students')            
+        axios           
+            .get('https://65adf6e91dfbae409a73a2f3.mockapi.io/students')
             .then(response => setStudentList(response.data))
     }, [])
 
@@ -31,8 +31,8 @@ function Topbar() {
         newStudent.mentor = []
         setStudentList([...studentList, newStudent])
 
-        axios
-            .post('http://localhost:3006/students', newStudent)
+        axios           
+            .post('https://65adf6e91dfbae409a73a2f3.mockapi.io/students', newStudent)
 
     }
 
@@ -49,8 +49,8 @@ function Topbar() {
         console.log(StudentList)
         setStudentList([...StudentList])
 
-        axios
-            .put(`http://localhost:3006/students/${updatedStudent.id}`, updatedStudent)
+        axios           
+            .put(`https://65adf6e91dfbae409a73a2f3.mockapi.io/students/${updatedStudent.id}`, updateStudent)
 
     }
 
@@ -59,13 +59,13 @@ function Topbar() {
         const newStudentList = currentStudentList.filter((student, index) => student.id !== id)
         setStudentList(newStudentList)
 
-        axios
-            .delete(`http://localhost:3006/students/${id}`)
+        axios           
+            .delete(`https://65adf6e91dfbae409a73a2f3.mockapi.io/students/${id}`)
     }
 
     useEffect(() => {
-        axios
-            .get('http://localhost:3007/mentors')            
+        axios            
+            .get('https://65adf6e91dfbae409a73a2f3.mockapi.io/mentors')
             .then(response => setMentorList(response.data))
     }, [])
 
@@ -75,19 +75,19 @@ function Topbar() {
         newMentor.students = []
         setMentorList([...mentorList, newMentor])
 
-        axios
-            .post('http://localhost:3007/mentors', newMentor)
+        axios            
+            .post('https://65adf6e91dfbae409a73a2f3.mockapi.io/mentors', newMentor)
         console.log(mentorList)
     }
-    // console.log(mentorList)
+    
 
     const deleteMentor = (id) => {
         const currentMentorList = [...mentorList]
         const newMentorList = currentMentorList.filter((mentor, index) => mentor.id !== id)
         setMentorList(newMentorList)
 
-        axios
-            .delete(`http://localhost:3007/mentors/${id}`)
+        axios             
+            .delete(`https://65adf6e91dfbae409a73a2f3.mockapi.io/mentors/${id}`)
     }
 
     const editMentor = (mentor, mentorIndex) => {
@@ -95,8 +95,8 @@ function Topbar() {
         setMentorIndex(mentorIndex)
         console.log(mentor)
 
-        axios
-            .get(`http://localhost:3007/mentors/${mentor.id}`)
+        axios            
+            .get(`https://65adf6e91dfbae409a73a2f3.mockapi.io/mentors/${mentor.id}`)
 
     }
 
@@ -105,8 +105,8 @@ function Topbar() {
         MentorList[mentorIndex] = { ...updatedMentor }
         setMentorList([...MentorList])
 
-        axios
-            .put(`http://localhost:3007/mentors/${updatedMentor.id}`, updatedMentor)
+        axios            
+            .put(`https://65adf6e91dfbae409a73a2f3.mockapi.io/mentors/${updatedMentor.id}`, updatedMentor)
     }
 
     const assignStudent = (Student, mentor) => {
@@ -115,9 +115,7 @@ function Topbar() {
         const updatedStudents = studentList.map((student) => {
             console.log(student.id, Student.id)
             if (student.id == Student.id) {
-                const a = { ...student, mentor: [...student.mentor, mentor.name] };
-                // const a = { ...mentor, students: [...mentor.students, student.name] } 
-                // const b = studentList.push(a)
+                const a = { ...student, mentor: [...student.mentor, mentor.name] };                
                 data = a
                 return data
             } else {
@@ -125,8 +123,9 @@ function Topbar() {
             }
         });
         console.log(updatedStudents)
-        axios
-            .put(`http://localhost:3006/students/${data.id}`, data)
+
+        axios           
+            .put(`https://65adf6e91dfbae409a73a2f3.mockapi.io/students/${data.id}`, data)
         setStudentList(updatedStudents);
     };
 
@@ -146,14 +145,12 @@ function Topbar() {
             }
         })
         console.log(updatedMentors)
-        await axios
-            .put(`http://localhost:3007/mentors/${data.id}`, data)
+
+        await axios            
+            .put(`https://65adf6e91dfbae409a73a2f3.mockapi.io/mentors/${data.id}`, data)
         setMentorList(updatedMentors)
     }
-
     
-
-
     return (
         <div id="content-wrapper" className="d-flex flex-column">
             <div id='content'>
@@ -364,7 +361,7 @@ function Topbar() {
                     <Route path='/create-mentor' element={<CreateMentor addMentor={addMentor} />} />
                     <Route path='/assign-student' element={<AssignStudent assignStudent={assignStudent} studentList={studentList} mentorList={mentorList} assignMentor={assignMentor} />} />
                     <Route path='/edit-student/:id' element={<EditStudent updateStudent={updateStudent} currentStudent={currentStudent} studentIndex={studentIndex} />} />
-                    <Route path='/edit-mentor/:id' element={<EditMentor updateMentor={updateMentor} currentMentor={currentMentor} mentorIndex={mentorIndex} />} />
+                    <Route path='/edit-mentor/:id' element={<EditMentor updateMentor={updateMentor} currentMentor={currentMentor} mentorIndex={mentorIndex} studentList={studentList} mentorList={mentorList} />} />
 
                 </Routes>
 

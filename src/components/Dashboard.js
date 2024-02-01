@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-function Dashboard({ currentStudent, studentList, mentorList, deleteStudent, deleteMentor, editStudent, editMentor }) {
+function Dashboard({studentList, mentorList, deleteStudent, deleteMentor, editStudent, editMentor }) {
 
 
   const navigate = useNavigate();

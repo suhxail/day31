@@ -17,8 +17,8 @@ function EditStudent({ updateStudent, currentStudent, studentIndex }) {
     const { id } = useParams()
 
     useEffect(() => {
-        axios
-            .get(`http://localhost:3006/students/${id}`)
+        axios            
+            .get(`https://65adf6e91dfbae409a73a2f3.mockapi.io/students/${id}`)
             .then(response => setStudent(response.data))
     }, [])
 
@@ -29,8 +29,8 @@ function EditStudent({ updateStudent, currentStudent, studentIndex }) {
         console.log(listOfMentor)
         let updatedStudent = { ...student, mentor: listOfMentor }
 
-        axios
-            .put(`http://localhost:3006/students/${updatedStudent.id}`, updatedStudent)
+        axios           
+            .put(`https://65adf6e91dfbae409a73a2f3.mockapi.io/students/${updatedStudent.id}`, updatedStudent)
     }
 
     const handleUpdate = (e) => {
@@ -64,10 +64,10 @@ function EditStudent({ updateStudent, currentStudent, studentIndex }) {
                 <br />
                 <label className='edit-label'>Course:</label>
                 <select className='edit-input' onChange={handleChange} value={student.course} name='course'>
+                    <option>Select a course</option>
                     <option>{selectedCourse[0]}</option>
                     <option>{selectedCourse[1]}</option>
                     <option>{selectedCourse[2]}</option>
-                    <option>{selectedCourse[3]}</option>
                 </select>
                 <br />
                 <label className='edit-label'>Mentor:</label>
@@ -80,28 +80,13 @@ function EditStudent({ updateStudent, currentStudent, studentIndex }) {
                                         student.mentor && student.mentor.map((data, id) => {
                                             if (student.mentor.length !== null) {
                                                 return <div key={id} className='edit-label'>
-                                                    <label className='edit-mentor-label'>{data}:</label>
+                                                    <label className='edit-mentor-label'>{data}</label>
                                                 </div>
                                             }
 
                                         })
                                     }
-                                </td>
-                                <br />
-                                <td>
-                                    {
-                                        student.mentor && student.mentor.map((data, id) => {
-                                            if (data !== null) {
-                                                return <div>
-                                                    <button className='edit-mentor-btn' onClick={(e) => handleDelete(e, id)} >Delete</button>
-                                                </div>
-                                            }
-                                        })
-                                    }
-
-
-                                </td>
-
+                                </td>                                
                             </tr>
                         </tbody>
                     </thead>

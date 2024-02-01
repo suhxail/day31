@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 function AssignStudent({ assignStudent, studentList, mentorList, assignMentor }) {
   const navigate = useNavigate();
@@ -9,14 +9,14 @@ function AssignStudent({ assignStudent, studentList, mentorList, assignMentor })
   const [viewSelectedStudent, setViewSelectedStudent] = useState({})
   const [viewSelectedMentor, setViewSelectedMentor] = useState({})
   useEffect(() => {
-    axios
-      .get('http://localhost:3006/students')
+    axios      
+      .get('https://65adf6e91dfbae409a73a2f3.mockapi.io/students')
       .then(response => setStudent(response.data))
   }, [])
 
   useEffect(() => {
-    axios
-      .get('http://localhost:3007/mentors')
+    axios      
+      .get('https://65adf6e91dfbae409a73a2f3.mockapi.io/mentors')
       .then(response => setMentor(response.data))
   }, [])
 
@@ -27,21 +27,21 @@ function AssignStudent({ assignStudent, studentList, mentorList, assignMentor })
     if (student && mentor) {      
       assignStudent(viewSelectedStudent,viewSelectedMentor)      
       assignMentor(viewSelectedMentor,viewSelectedStudent)
-      
+
       navigate('/');
     } else {      
       alert('Please select a student and a mentor');
     }
-  };
+  };  
 
   const handleStudentChange = (e) => {
-    const selectedStudent = studentList.find((s) => s.id == e.target.value);    
+    const selectedStudent = studentList.find((s) => s.id == e.target.value);
     setViewSelectedStudent(selectedStudent)
   };
 
   const handleMentorChange = (e) => {
     const selectedMentor = mentorList.find((m) => m.id == e.target.value);
-    console.log(selectedMentor, e.target.value)    
+    console.log(selectedMentor, e.target.value)
     setViewSelectedMentor(selectedMentor)
 
   };
@@ -54,7 +54,7 @@ function AssignStudent({ assignStudent, studentList, mentorList, assignMentor })
           <p className='create-label'>Mentor</p>
           <select className='create-input' onChange={handleMentorChange} >
             <option>Select mentor</option>
-            
+
             {
               mentor && mentor.map(data => (<option key={data.id} value={data.id} >{data.name}</option>))
             }
@@ -67,7 +67,7 @@ function AssignStudent({ assignStudent, studentList, mentorList, assignMentor })
           <p className='create-label'>Student</p>
           <select className='create-input' onChange={handleStudentChange} >
             <option>Select student</option>
-            
+
             {
               student && student.map(data => (<option key={data.id} value={data.id}>{data.name}</option>))
             }
@@ -76,7 +76,7 @@ function AssignStudent({ assignStudent, studentList, mentorList, assignMentor })
         </div>
         <br />
         <div>
-          <button className="btn btn-successi" onClick={handleAssign}>Assign student</button>
+          <button className="btn btn-success" onClick={handleAssign}>Assign student</button>
         </div>
       </div>
     </div>

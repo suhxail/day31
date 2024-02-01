@@ -2,7 +2,7 @@ import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 
-function EditMentor({ updateMentor, currentMentor, mentorIndex }) {
+function EditMentor({ currentMentor, mentorIndex, studentList, mentorList }) {
   const navigate = useNavigate()
   const [mentor, setMentor] = useState(currentMentor ? currentMentor : {
     name: "",
@@ -18,18 +18,17 @@ function EditMentor({ updateMentor, currentMentor, mentorIndex }) {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:3007/mentors/${id}`)
+      .get(`https://65adf6e91dfbae409a73a2f3.mockapi.io/mentors/${id}`)
       .then(response => setMentor(response.data))
   }, [])
 
 
   const handleUpdate = (e) => {
     e.preventDefault()
-    updateMentor(mentor, mentorIndex);
     navigate('/')
   }
 
-  const handleChange = (e) => {        
+  const handleChange = (e) => {
     setMentor({ ...mentor, [e.target.name]: e.target.value });
     console.log(e.target.value, e.target.name)
   }
@@ -39,15 +38,53 @@ function EditMentor({ updateMentor, currentMentor, mentorIndex }) {
   }, [mentor])
 
 
-  const handleDelete = (e, i) => {
-    console.log(i)
-    e.preventDefault()
-    const listOfStudents = mentor.students.filter((student, index) => (index) !== i)
-    console.log(listOfStudents)
-    let updatedMentor = { ...mentor, students: listOfStudents }
+  const handleDelete = async (i, ind) => {
+    i.preventDefault()
+
+    let mentorTemp = {};
+    let studentTemp = {}
+
+    mentorList.map((mentor, index) => {
+      if (ind == index) {
+        mentorTemp = mentor
+      }
+    })
+    console.log(mentorTemp)
+    studentList.map((student) => {
+      if (mentorTemp.students?.includes(student.name)) {
+        studentTemp = student
+      }
+    })
+    console.log(mentorTemp)
+    const a = mentorTemp.students.filter((student, index) => {
+      if (student != studentTemp.name) {
+
+        return student
+      }
+    })
+    console.log(a)
+    const b = studentTemp.mentor.filter((mentor, index) => {
+      if (mentor != mentorTemp.name) {
+
+        return mentor
+      }
+    })
+
+    mentorTemp["students"] = a;
+    studentTemp["mentor"] = b
+
+
+
+    await axios
+      .put(`https://65adf6e91dfbae409a73a2f3.mockapi.io/mentors/${mentorTemp.id}`, mentorTemp)
+
+
+    await axios
+      .put(`https://65adf6e91dfbae409a73a2f3.mockapi.io/students/${studentTemp.id}`, studentTemp)
 
     axios
-      .put(`http://localhost:3007/mentors/${updatedMentor.id}`, updatedMentor)
+      .get(`https://65adf6e91dfbae409a73a2f3.mockapi.io/mentors/${mentorTemp.id}`)
+      .then(response => setMentor(response.data))
   }
 
   return (
@@ -66,10 +103,10 @@ function EditMentor({ updateMentor, currentMentor, mentorIndex }) {
         <br />
         <label className='edit-label'>Course:</label>
         <select className='edit-input' onChange={handleChange} value={mentor.course} name='course'>
+          <option>Select a course</option>
           <option>{selectedCourse[0]}</option>
           <option>{selectedCourse[1]}</option>
           <option>{selectedCourse[2]}</option>
-          <option>{selectedCourse[3]}</option>
         </select>
         <br />
         <label className='edit-label'>Students:</label>
@@ -81,18 +118,15 @@ function EditMentor({ updateMentor, currentMentor, mentorIndex }) {
                 <td>
                   {
                     mentor.students && mentor.students.map((data, id) => {
-                      // for (let i = 0; i <= mentor.students.length; i++) {
                       if (mentor.students.length !== null) {
                         return <div key={id} className='edit-label'>
                           <label className='edit-mentor-label'>{data}:</label>
                         </div>
                       }
-                    }
-                      // }
-                    )
+                    })
                   }
                 </td>
-                <br />
+
                 <td>
                   {
                     mentor.students && mentor.students.map((data, id) => {
